@@ -359,7 +359,8 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                 {/* YES Button */}
                 <motion.button
                   onClick={handleYes}
-                  className="group relative px-12 md:px-16 py-4 md:py-5 rounded-full overflow-hidden"
+                  onTouchEnd={(e) => { e.preventDefault(); handleYes(); }}
+                  className="group relative px-10 sm:px-12 md:px-16 py-4 md:py-5 rounded-full overflow-hidden touch-manipulation min-w-[160px] min-h-[52px]"
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -414,7 +415,8 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                 {/* NO Button (runs away after clicks) */}
                 <motion.button
                   onClick={handleNo}
-                  className="relative px-10 md:px-12 py-4 md:py-5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm overflow-hidden"
+                  onTouchEnd={(e) => { e.preventDefault(); handleNo(); }}
+                  className="relative px-8 sm:px-10 md:px-12 py-4 md:py-5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm overflow-hidden touch-manipulation min-w-[120px] min-h-[52px]"
                   animate={{ 
                     x: noButtonPosition.x, 
                     y: noButtonPosition.y,

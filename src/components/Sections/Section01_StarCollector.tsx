@@ -303,11 +303,11 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
       {phase === 'collecting' && (
         <>
           {/* Instruction */}
-          <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center">
+          <div className="absolute top-4 sm:top-6 md:top-8 left-1/2 -translate-x-1/2 z-10 text-center px-4 w-full max-w-md">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-white text-xl mb-2"
+              className="text-white text-base sm:text-lg md:text-xl mb-2"
             >
               ✨ Find the star that lights up her heart! ✨
             </motion.p>
@@ -365,8 +365,9 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                     }
               }
               onClick={() => handleStarClick(star)}
-              className="absolute cursor-pointer flex flex-col items-center"
-              style={{ left: star.x - 30, top: star.y - 30 }}
+              onTouchEnd={(e) => { e.preventDefault(); handleStarClick(star); }}
+              className="absolute cursor-pointer flex flex-col items-center touch-manipulation"
+              style={{ left: star.x - 30, top: star.y - 30, minWidth: '60px', minHeight: '60px' }}
             >
               <motion.div
                 animate={star.isSpecial ? {
@@ -385,7 +386,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
                 whileHover={{ scale: 1.3 }}
-                className={`${star.isSpecial ? 'text-5xl' : 'text-3xl'}`}
+                className={`${star.isSpecial ? 'text-4xl sm:text-5xl md:text-6xl' : 'text-2xl sm:text-3xl md:text-4xl'}`}
               >
                 {star.isSpecial ? '🌟' : '⭐'}
               </motion.div>

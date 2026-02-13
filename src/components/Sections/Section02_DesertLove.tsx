@@ -359,8 +359,21 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    // Handle both touch and mouse events
+    let clientX: number, clientY: number;
+    if ('changedTouches' in e && e.changedTouches.length > 0) {
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else if ('touches' in e && e.touches.length > 0) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else if ('clientX' in e) {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    } else {
+      return;
+    }
+    
     const clickX = ((clientX - rect.left) / rect.width) * 100;
 
     // Add ripple effect
@@ -482,9 +495,10 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen w-full relative overflow-hidden cursor-pointer select-none"
+      className="h-screen w-full relative overflow-hidden cursor-pointer select-none touch-manipulation"
       onClick={handleInteraction}
-      onTouchStart={handleInteraction}
+      onTouchStart={(e) => e.preventDefault()}
+      onTouchEnd={handleInteraction}
     >
       {/* =============== SKY BACKGROUND =============== */}
       <motion.div 
@@ -1247,7 +1261,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           <img
             src="https://i.ibb.co.com/BXqzP1K/boy.png"
             alt="Boy"
-            className="w-12 h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
+            className="w-10 h-14 sm:w-12 sm:h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
             style={{
               filter: 'drop-shadow(0 4px 8px rgba(65, 105, 225, 0.5))',
             }}
@@ -1310,7 +1324,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           <img
             src="https://i.ibb.co.com/BVTBVNPd/girl.png"
             alt="Girl"
-            className="w-12 h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
+            className="w-10 h-14 sm:w-12 sm:h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
             style={{
               filter: 'drop-shadow(0 4px 8px rgba(255, 105, 180, 0.5))',
             }}
@@ -1547,7 +1561,12 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                 setShowImageTransition(false);
                 setShowCompletion(true);
               }}
-              className="absolute top-6 left-6 z-50 text-white/50 hover:text-white/90 text-sm transition-colors"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                setShowImageTransition(false);
+                setShowCompletion(true);
+              }}
+              className="absolute top-4 left-4 sm:top-6 sm:left-6 z-50 text-white/50 hover:text-white/90 text-sm transition-colors touch-manipulation px-3 py-2 min-h-[44px] min-w-[44px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2 }}

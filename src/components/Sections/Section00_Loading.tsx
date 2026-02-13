@@ -569,7 +569,8 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
           >
             <motion.button
               onClick={onComplete}
-              className="group relative w-full py-2 overflow-hidden"
+              onTouchEnd={(e) => { e.preventDefault(); onComplete(); }}
+              className="group relative w-full py-3 sm:py-2 overflow-hidden touch-manipulation min-h-[52px]"
               whileHover={{ scale: 1.0 }}
               whileTap={{ scale: 0.98 }}
             >

@@ -8,12 +8,16 @@
   --primary: #ec4899;
   --primary-light: #f472b6;
   --primary-dark: #be185d;
+  /* Prevent iOS zoom on input focus */
+  --min-touch-target: 44px;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* Prevent text selection on touch */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -23,6 +27,49 @@ body {
   overflow: hidden;
   background: var(--background);
   color: var(--foreground);
+  /* Prevent pull-to-refresh and overscroll */
+  overscroll-behavior: none;
+  /* Enable smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent zoom on double tap */
+  touch-action: manipulation;
+}
+
+/* Ensure touch targets are accessible */
+button, a, [role="button"] {
+  min-height: var(--min-touch-target);
+  min-width: var(--min-touch-target);
+}
+
+/* Touch manipulation helper class */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Responsive font sizing */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
 }
 
 /* Scrollbar Styles */
