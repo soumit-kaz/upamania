@@ -77,16 +77,25 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
 
   if (!isActive) return null;
 
+  // Handle tap anywhere to continue (for mobile)
+  const handleTapToContinue = () => {
+    if (showContent) {
+      onComplete();
+    }
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className="h-screen w-full relative overflow-hidden"
+      className="h-screen w-full relative overflow-hidden cursor-pointer touch-manipulation"
       style={{
         background: 'linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 30%, #2d1f3d 60%, #1a1a2e 100%)',
       }}
+      onClick={handleTapToContinue}
+      onTouchEnd={(e) => { e.preventDefault(); handleTapToContinue(); }}
     >
       {/* Splash screen overlay */}
       <AnimatePresence>
@@ -613,6 +622,15 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
                 </motion.span>
               </span>
             </motion.button>
+            
+            {/* Mobile hint - tap anywhere */}
+            <motion.p
+              className="text-center text-white/50 text-xs py-2 sm:hidden"
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              or tap anywhere on screen
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
