@@ -13,7 +13,6 @@ import Section03_Ending from '@/components/Sections/Section03_Ending';
 
 // Layout
 import Navigation from '@/components/Layout/Navigation';
-import ProgressBar from '@/components/Layout/ProgressBar';
 import AudioPlayer from '@/components/Layout/AudioPlayer';
 
 export default function Home() {
@@ -73,11 +72,6 @@ export default function Home() {
 
   return (
     <main className="h-screen h-[100dvh] w-full overflow-hidden relative bg-black">
-      {/* Progress Bar */}
-      {hasStarted && currentSection > 0 && currentSection < SECTION_COUNT - 1 && (
-        <ProgressBar />
-      )}
-
       {/* Audio Player */}
       {hasStarted && currentSection > 0 && (
         <AudioPlayer />

@@ -586,15 +586,6 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
                   </motion.span>
                 </span>
               </motion.button>
-              
-              {/* Tap anywhere hint for mobile */}
-              <motion.p
-                className="text-center text-white/40 text-xs pb-2"
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                tap anywhere to continue
-              </motion.p>
             </div>
           </motion.div>
         )}
