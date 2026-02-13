@@ -562,8 +562,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute bottom-0 left-0 right-0 z-40 pb-safe"
-            style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 12px)' }}
+            className="absolute bottom-0 left-0 right-0 z-30"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -571,44 +570,40 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
             <motion.button
               onClick={onComplete}
               onTouchEnd={(e) => { e.preventDefault(); onComplete(); }}
-              className="group relative w-full py-4 sm:py-3 overflow-hidden touch-manipulation min-h-[56px]"
+              className="group relative w-full py-3 sm:py-2 overflow-hidden touch-manipulation min-h-[52px]"
               whileHover={{ scale: 1.0 }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Button background - more visible */}
+              {/* Button background - matching night sky */}
               <div
                 className="absolute inset-0"
                 style={{
-                  background: 'linear-gradient(180deg, rgba(236,72,153,0.9), rgba(147,51,234,0.9))',
-                  borderTop: '2px solid rgba(255,182,193,0.5)',
+                  background: 'linear-gradient(180deg, rgba(26,26,58,0.95), rgba(15,15,35,0.98))',
+                  borderTop: '1px solid rgba(147,112,219,0.3)',
                 }}
               />
               
-              {/* Pulsing glow effect */}
+              {/* Subtle glow effect */}
               <motion.div
                 className="absolute inset-0"
                 style={{ 
-                  background: 'linear-gradient(180deg, rgba(255,182,193,0.3), rgba(255,105,180,0.2))',
+                  background: 'linear-gradient(180deg, rgba(147,112,219,0.15), rgba(75,0,130,0.1))',
                 }}
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={{ opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity }}
               />
 
               {/* Shimmer effect */}
               <motion.div
-                className="absolute inset-0 overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-                  }}
-                  animate={{ x: ['-100%', '100%'] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                />
-              </motion.div>
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+                }}
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+              />
 
-              <span className="relative z-10 text-white font-semibold text-base md:text-lg tracking-wider flex items-center justify-center gap-2">
+              <span className="relative z-10 text-white/90 font-medium text-sm md:text-base tracking-wider flex items-center justify-center gap-2">
                 Begin Our Journey
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
