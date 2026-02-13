@@ -68,14 +68,14 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
     if (typeof window === 'undefined') return;
     
     const newStars: NamedStar[] = [];
-    const padding = 120;
-    const minDistance = 160;
+    const padding = 80;
+    const minDistance = 100;
     const shuffledStarData = [...STAR_DATA].sort(() => Math.random() - 0.5);
     
     // Add the special star (Soumit) first
     let specialX = 0, specialY = 0;
-    specialX = window.innerWidth / 2 + (Math.random() - 0.5) * 300;
-    specialY = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+    specialX = window.innerWidth / 2 + (Math.random() - 0.5) * Math.min(200, window.innerWidth * 0.3);
+    specialY = window.innerHeight / 2 + (Math.random() - 0.5) * Math.min(150, window.innerHeight * 0.2);
     
     newStars.push({
       id: 0,
@@ -96,7 +96,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
       
       do {
         x = padding + Math.random() * (window.innerWidth - padding * 2);
-        y = padding + 80 + Math.random() * (window.innerHeight - padding * 2 - 80);
+        y = padding + 60 + Math.random() * (window.innerHeight - padding * 2 - 120);
         attempts++;
       } while (
         attempts < 100 &&

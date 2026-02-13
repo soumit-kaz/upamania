@@ -250,27 +250,27 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute top-[8%] sm:top-[10%] md:top-[10%] right-[5%] sm:right-[8%] md:right-[12%] z-30"
+            className="absolute top-[5%] sm:top-[8%] md:top-[10%] right-[3%] sm:right-[6%] md:right-[10%] z-20"
             initial={{ opacity: 0, scale: 0.5, y: -30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1, type: 'spring' }}
           >
             {/* Soft moonlike glow behind */}
             <motion.div
-              className="absolute inset-0 rounded-full blur-3xl"
+              className="absolute inset-0 rounded-full blur-2xl sm:blur-3xl"
               style={{ 
-                background: 'radial-gradient(circle, rgba(255,220,150,0.6) 0%, rgba(255,180,100,0.3) 40%, rgba(147,51,234,0.2) 70%, transparent 100%)',
-                transform: 'scale(2.2)',
+                background: 'radial-gradient(circle, rgba(255,220,150,0.5) 0%, rgba(255,180,100,0.2) 40%, transparent 70%)',
+                transform: 'scale(1.8)',
               }}
-              animate={{ opacity: [0.5, 0.8, 0.5], scale: [2.2, 2.4, 2.2] }}
+              animate={{ opacity: [0.4, 0.7, 0.4], scale: [1.8, 2, 1.8] }}
               transition={{ duration: 4, repeat: Infinity }}
             />
             
-            {/* Circular image */}
+            {/* Circular image - much smaller on mobile */}
             <div 
-              className="relative w-24 h-24 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden"
+              className="relative w-16 h-16 sm:w-28 sm:h-28 md:w-40 md:h-40 lg:w-52 lg:h-52 rounded-full overflow-hidden"
               style={{
-                boxShadow: '0 0 80px 25px rgba(255,200,100,0.5), 0 0 120px 40px rgba(255,150,50,0.3), 0 0 160px 60px rgba(147,51,234,0.15)',
+                boxShadow: '0 0 40px 15px rgba(255,200,100,0.4), 0 0 80px 30px rgba(255,150,50,0.2)',
               }}
             >
               <img
@@ -287,18 +287,12 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
               />
             </div>
             
-            {/* Decorative ring - warm moonlight color */}
+            {/* Decorative ring - smaller on mobile */}
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-amber-300/30"
-              style={{ transform: 'scale(1.15)' }}
+              className="absolute inset-0 rounded-full border border-amber-300/20 sm:border-2 sm:border-amber-300/30"
+              style={{ transform: 'scale(1.1)' }}
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            />
-            <motion.div
-              className="absolute inset-0 rounded-full border border-orange-300/20"
-              style={{ transform: 'scale(1.25)' }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
             />
           </motion.div>
         )}
@@ -422,10 +416,10 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
         ))}
       </div>
 
-      {/* Sanctuary/Temple at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      {/* Sanctuary/Temple at bottom - positioned above button area */}
+      <div className="absolute bottom-[70px] sm:bottom-[60px] left-0 right-0 z-10 pointer-events-none">
         {/* Ground/hill silhouette */}
-        <svg viewBox="0 0 1440 200" className="w-full h-16 sm:h-auto" preserveAspectRatio="none">
+        <svg viewBox="0 0 1440 150" className="w-full h-12 sm:h-16" preserveAspectRatio="none">
           <defs>
             <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#1a1a2e" />
@@ -433,12 +427,12 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
             </linearGradient>
           </defs>
           {/* Rolling hills */}
-          <path d="M0 200 L0 120 Q200 80 400 100 Q600 120 720 90 Q900 60 1100 100 Q1300 130 1440 110 L1440 200 Z" fill="url(#groundGrad)" />
+          <path d="M0 150 L0 80 Q200 50 400 70 Q600 85 720 60 Q900 35 1100 70 Q1300 95 1440 75 L1440 150 Z" fill="url(#groundGrad)" />
         </svg>
         
-        {/* Temple silhouette */}
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2">
-          <svg width="140" height="84" viewBox="0 0 200 120" className="sm:w-[200px] sm:h-[120px] opacity-80">
+        {/* Temple silhouette - smaller on mobile */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+          <svg width="100" height="60" viewBox="0 0 200 120" className="sm:w-[140px] sm:h-[84px] md:w-[180px] md:h-[108px] opacity-80">
             {/* Main temple body */}
             <rect x="60" y="60" width="80" height="60" fill="#1a1a2e" />
             {/* Roof layers */}
@@ -452,61 +446,30 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
             {/* Windows with warm glow */}
             <rect x="70" y="70" width="12" height="15" rx="2" fill="#FFD700" opacity="0.6" />
             <rect x="118" y="70" width="12" height="15" rx="2" fill="#FFD700" opacity="0.6" />
-            {/* Side structures */}
-            <rect x="20" y="80" width="35" height="40" fill="#1a1a2e" />
-            <polygon points="37.5,60 15,80 60,80" fill="#151525" />
-            <rect x="145" y="80" width="35" height="40" fill="#1a1a2e" />
-            <polygon points="162.5,60 140,80 185,80" fill="#151525" />
           </svg>
-          {/* Ambient glow from temple */}
-          <motion.div
-            className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-48 h-16 rounded-full blur-2xl"
-            style={{ background: 'radial-gradient(ellipse, rgba(255,200,100,0.3) 0%, transparent 70%)' }}
-            animate={{ opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
         </div>
 
-        {/* Boy looking at moon */}
-        <div className="absolute bottom-8 sm:bottom-12 right-[25%] sm:right-[30%] md:right-[35%]">
-          {/* Boy silhouette */}
-          <svg width="20" height="34" viewBox="0 0 30 50" className="relative z-10 sm:w-[30px] sm:h-[50px]">
-            {/* Head */}
+        {/* Boy silhouette - smaller */}
+        <div className="absolute bottom-4 right-[20%] sm:right-[25%] md:right-[30%]">
+          <svg width="15" height="25" viewBox="0 0 30 50" className="sm:w-[20px] sm:h-[34px] opacity-80">
             <circle cx="15" cy="8" r="7" fill="#0a0a15" />
-            {/* Body */}
             <rect x="11" y="14" width="8" height="16" rx="2" fill="#0a0a15" />
-            {/* Arms relaxed */}
-            <rect x="0" y="16" width="10" height="4" rx="2" fill="#0a0a15" transform="rotate(10 5 18)" />
-            <rect x="20" y="16" width="10" height="4" rx="2" fill="#0a0a15" transform="rotate(-10 25 18)" />
-            {/* Legs */}
             <rect x="11" y="28" width="4" height="20" rx="2" fill="#0a0a15" />
             <rect x="15" y="28" width="4" height="20" rx="2" fill="#0a0a15" />
           </svg>
         </div>
         
-        {/* Trees silhouettes */}
-        <div className="absolute bottom-2 sm:bottom-4 left-4 sm:left-10">
-          <svg width="40" height="53" viewBox="0 0 60 80" className="sm:w-[60px] sm:h-[80px]">
+        {/* Trees - smaller and fewer on mobile */}
+        <div className="absolute bottom-0 left-2 sm:left-6 md:left-10">
+          <svg width="25" height="35" viewBox="0 0 60 80" className="sm:w-[35px] sm:h-[50px] md:w-[50px] md:h-[70px]">
             <ellipse cx="30" cy="30" rx="25" ry="30" fill="#0f0f1f" />
             <rect x="27" y="55" width="6" height="25" fill="#0a0a10" />
           </svg>
         </div>
-        <div className="absolute bottom-2 sm:bottom-4 right-4 sm:right-10">
-          <svg width="33" height="47" viewBox="0 0 50 70" className="sm:w-[50px] sm:h-[70px]">
+        <div className="absolute bottom-0 right-2 sm:right-6 md:right-10">
+          <svg width="22" height="30" viewBox="0 0 50 70" className="sm:w-[30px] sm:h-[42px] md:w-[45px] md:h-[63px]">
             <ellipse cx="25" cy="25" rx="20" ry="25" fill="#0f0f1f" />
             <rect x="22" y="45" width="6" height="25" fill="#0a0a10" />
-          </svg>
-        </div>
-        <div className="absolute bottom-3 sm:bottom-6 left-1/4">
-          <svg width="27" height="40" viewBox="0 0 40 60" className="sm:w-[40px] sm:h-[60px]">
-            <ellipse cx="20" cy="20" rx="15" ry="20" fill="#12121f" />
-            <rect x="17" y="38" width="6" height="22" fill="#0a0a12" />
-          </svg>
-        </div>
-        <div className="absolute bottom-3 sm:bottom-6 right-1/4">
-          <svg width="30" height="43" viewBox="0 0 45 65" className="sm:w-[45px] sm:h-[65px]">
-            <ellipse cx="22" cy="22" rx="18" ry="22" fill="#12121f" />
-            <rect x="19" y="42" width="6" height="23" fill="#0a0a12" />
           </svg>
         </div>
       </div>
@@ -567,71 +530,72 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
         </motion.div>
       ))}
 
-      {/* Button at bottom - full width */}
+      {/* Button at bottom - ALWAYS VISIBLE - fixed height area */}
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute bottom-0 left-0 right-0 z-30 pb-safe"
+            className="fixed bottom-0 left-0 right-0 z-50"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}
           >
-            <motion.button
-              onClick={onComplete}
-              onTouchEnd={(e) => { e.preventDefault(); onComplete(); }}
-              className="group relative w-full py-4 sm:py-3 overflow-hidden touch-manipulation min-h-[56px] sm:min-h-[52px]"
-              whileHover={{ scale: 1.0 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {/* Button background - matching night sky */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(26,26,58,0.95), rgba(15,15,35,0.98))',
-                  borderTop: '1px solid rgba(147,112,219,0.3)',
-                }}
-              />
-              
-              {/* Subtle glow effect */}
-              <motion.div
-                className="absolute inset-0"
-                style={{ 
-                  background: 'linear-gradient(180deg, rgba(147,112,219,0.15), rgba(75,0,130,0.1))',
-                }}
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-
-              {/* Shimmer effect */}
-              <motion.div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-                }}
-                animate={{ x: ['-100%', '100%'] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
-              />
-
-              <span className="relative z-10 text-white/90 font-medium text-base sm:text-sm md:text-base tracking-wider flex items-center justify-center gap-2">
-                Begin Our Journey
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  →
-                </motion.span>
-              </span>
-            </motion.button>
+            {/* Gradient fade above button */}
+            <div 
+              className="h-6 w-full"
+              style={{ background: 'linear-gradient(to bottom, transparent, rgba(10,10,26,0.95))' }}
+            />
             
-            {/* Mobile hint - tap anywhere */}
-            <motion.p
-              className="text-center text-white/50 text-xs py-2 sm:hidden"
-              animate={{ opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 2, repeat: Infinity }}
+            {/* Button container with safe area */}
+            <div 
+              className="w-full"
+              style={{ 
+                background: 'linear-gradient(180deg, rgba(26,26,58,0.98), rgba(10,10,26,1))',
+                paddingBottom: 'max(8px, env(safe-area-inset-bottom))' 
+              }}
             >
-              or tap anywhere on screen
-            </motion.p>
+              <motion.button
+                onClick={(e) => { e.stopPropagation(); onComplete(); }}
+                onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); onComplete(); }}
+                className="group relative w-full py-4 overflow-hidden touch-manipulation"
+                whileTap={{ scale: 0.98 }}
+              >
+                {/* Glowing border top */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-pink-400/60 to-transparent" />
+                
+                {/* Shimmer effect */}
+                <motion.div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }}
+                  animate={{ x: ['-100%', '100%'] }}
+                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1 }}
+                />
+
+                <span className="relative z-10 text-white font-semibold text-base tracking-wider flex items-center justify-center gap-3">
+                  <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    💕
+                  </motion.span>
+                  Begin Our Journey
+                  <motion.span
+                    animate={{ x: [0, 8, 0] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+              </motion.button>
+              
+              {/* Tap anywhere hint for mobile */}
+              <motion.p
+                className="text-center text-white/40 text-xs pb-2"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                tap anywhere to continue
+              </motion.p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
