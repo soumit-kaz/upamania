@@ -72,7 +72,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen w-full overflow-hidden relative bg-black">
+    <main className="h-screen h-[100dvh] w-full overflow-hidden relative bg-black">
       {/* Progress Bar */}
       {hasStarted && currentSection > 0 && currentSection < SECTION_COUNT - 1 && (
         <ProgressBar />

@@ -262,7 +262,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen w-full relative overflow-hidden"
+      className="h-screen h-[100dvh] w-full relative overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #0a0e27 0%, #1a1a40 100%)',
       }}
@@ -283,7 +283,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`text-2xl md:text-4xl mb-4 ${
+                  className={`text-lg sm:text-2xl md:text-4xl mb-3 sm:mb-4 px-4 ${
                     i === CONTENT.starCollector.lines.length - 1
                       ? 'text-gold font-bold'
                       : 'text-white'
@@ -303,11 +303,11 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
       {phase === 'collecting' && (
         <>
           {/* Instruction */}
-          <div className="absolute top-4 sm:top-6 md:top-8 left-1/2 -translate-x-1/2 z-10 text-center px-4 w-full max-w-md">
+          <div className="absolute top-4 sm:top-6 md:top-8 left-1/2 -translate-x-1/2 z-10 text-center px-4 w-full max-w-sm sm:max-w-md">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-white text-base sm:text-lg md:text-xl mb-2"
+              className="text-white text-sm sm:text-base md:text-lg lg:text-xl mb-2"
             >
               ✨ Find the star that lights up her heart! ✨
             </motion.p>
@@ -367,7 +367,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
               onClick={() => handleStarClick(star)}
               onTouchEnd={(e) => { e.preventDefault(); handleStarClick(star); }}
               className="absolute cursor-pointer flex flex-col items-center touch-manipulation"
-              style={{ left: star.x - 30, top: star.y - 30, minWidth: '60px', minHeight: '60px' }}
+              style={{ left: star.x - 25, top: star.y - 25, minWidth: '50px', minHeight: '50px' }}
             >
               <motion.div
                 animate={star.isSpecial ? {
@@ -386,7 +386,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
                 whileHover={{ scale: 1.3 }}
-                className={`${star.isSpecial ? 'text-4xl sm:text-5xl md:text-6xl' : 'text-2xl sm:text-3xl md:text-4xl'}`}
+                className={`${star.isSpecial ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl' : 'text-xl sm:text-2xl md:text-3xl lg:text-4xl'}`}
               >
                 {star.isSpecial ? '🌟' : '⭐'}
               </motion.div>
@@ -455,20 +455,20 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -30, scale: 0.8 }}
                 transition={{ type: 'spring', damping: 15 }}
-                className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 max-w-md mx-4"
+                className="fixed bottom-16 sm:bottom-24 left-1/2 -translate-x-1/2 z-50 max-w-[90%] sm:max-w-md mx-4"
               >
-                <div className="bg-gradient-to-br from-indigo-900/95 to-purple-900/95 p-6 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20">
+                <div className="bg-gradient-to-br from-indigo-900/95 to-purple-900/95 p-4 sm:p-6 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20">
                   <motion.div
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 0.5 }}
-                    className="text-4xl text-center mb-3"
+                    className="text-3xl sm:text-4xl text-center mb-2 sm:mb-3"
                   >
                     💫
                   </motion.div>
-                  <p className="text-lg text-white/90 font-medium text-center mb-2">
+                  <p className="text-base sm:text-lg text-white/90 font-medium text-center mb-2">
                     ⭐ {currentHint.name} whispers:
                   </p>
-                  <p className="text-white/80 text-center italic leading-relaxed">
+                  <p className="text-sm sm:text-base text-white/80 text-center italic leading-relaxed">
                     &ldquo;{currentHint.hint}&rdquo;
                   </p>
                 </div>
@@ -571,21 +571,21 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                   />
                   
                   {/* Image container */}
-                  <div className="relative bg-gradient-to-br from-pink-200 via-rose-100 to-pink-200 p-3 rounded-3xl shadow-2xl">
+                  <div className="relative bg-gradient-to-br from-pink-200 via-rose-100 to-pink-200 p-2 sm:p-3 rounded-3xl shadow-2xl">
                     <motion.img
                       src="https://i.ibb.co.com/fYpfnKps/Soumit-Star.jpg"
                       alt={`${ASSETS.personal.yourName} being adored by ${ASSETS.personal.herName}`}
-                      className="w-72 h-72 md:w-96 md:h-96 object-cover rounded-2xl"
+                      className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 object-cover rounded-2xl"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3, duration: 0.5 }}
                     />
                     
                     {/* Cute frame decoration */}
-                    <div className="absolute -top-4 -left-4 text-4xl">💕</div>
-                    <div className="absolute -top-4 -right-4 text-4xl">💕</div>
-                    <div className="absolute -bottom-4 -left-4 text-4xl">💕</div>
-                    <div className="absolute -bottom-4 -right-4 text-4xl">💕</div>
+                    <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 text-2xl sm:text-4xl">💕</div>
+                    <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 text-2xl sm:text-4xl">💕</div>
+                    <div className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 text-2xl sm:text-4xl">💕</div>
+                    <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 text-2xl sm:text-4xl">💕</div>
                   </div>
 
                   {/* Caption */}
@@ -593,16 +593,16 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="mt-6 text-center"
+                    className="mt-4 sm:mt-6 text-center"
                   >
                     <motion.p 
-                      className="text-2xl md:text-3xl font-bold text-white"
+                      className="text-lg sm:text-2xl md:text-3xl font-bold text-white"
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 1.5, repeat: Infinity }}
                     >
                       💖 You found your star! 💖
                     </motion.p>
-                    <p className="text-lg text-pink-200 mt-2">
+                    <p className="text-sm sm:text-lg text-pink-200 mt-2">
                       {ASSETS.personal.herName}&apos;s love reaches for {ASSETS.personal.yourName} 🥰
                     </p>
                   </motion.div>
@@ -616,7 +616,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-pink-300/70 text-center text-sm px-4"
+            className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 text-pink-300/70 text-center text-xs sm:text-sm px-4 max-w-[90%]"
           >
             💕 Look for a name that means &ldquo;the Sun&rdquo;... someone whose warmth lights up {ASSETS.personal.herName}&apos;s world 💕
           </motion.p>
@@ -669,7 +669,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 0.5, repeat: Infinity }}
-                className="text-7xl text-center mb-4"
+                className="text-5xl sm:text-7xl text-center mb-3 sm:mb-4"
               >
                 💖
               </motion.div>
@@ -678,7 +678,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-3xl md:text-4xl font-bold text-white text-center mb-2"
+                className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center mb-2"
               >
                 You found me! 🥰
               </motion.h2>
@@ -687,7 +687,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-xl text-white/90 text-center mb-4"
+                className="text-base sm:text-xl text-white/90 text-center mb-3 sm:mb-4"
               >
                 Among all the stars in the universe...
               </motion.p>
@@ -696,7 +696,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
-                className="text-2xl font-bold text-yellow-200 text-center"
+                className="text-lg sm:text-2xl font-bold text-yellow-200 text-center"
               >
                 {ASSETS.personal.yourName} chose {ASSETS.personal.herName} 💕
               </motion.p>
@@ -705,7 +705,7 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="text-center mt-4 text-4xl"
+                className="text-center mt-3 sm:mt-4 text-2xl sm:text-4xl"
               >
                 😘💋❤️💋😘
               </motion.div>

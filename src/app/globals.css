@@ -10,6 +10,8 @@
   --primary-dark: #be185d;
   /* Prevent iOS zoom on input focus */
   --min-touch-target: 44px;
+  /* Dynamic viewport height for mobile */
+  --vh: 1vh;
 }
 
 * {
@@ -24,6 +26,7 @@ html,
 body {
   max-width: 100vw;
   max-height: 100vh;
+  max-height: 100dvh; /* Use dynamic viewport height */
   overflow: hidden;
   background: var(--background);
   color: var(--foreground);
@@ -33,6 +36,10 @@ body {
   -webkit-overflow-scrolling: touch;
   /* Prevent zoom on double tap */
   touch-action: manipulation;
+  /* Prevent iOS Safari bounce */
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 /* Ensure touch targets are accessible */
@@ -275,9 +282,45 @@ html {
   }
 }
 
+/* Fix for mobile viewport height */
+.h-screen-safe {
+  height: 100vh;
+  height: 100dvh;
+  height: -webkit-fill-available;
+}
+
+/* Mobile-first responsive utilities */
+@media (max-width: 640px) {
+  .mobile-text-sm {
+    font-size: 0.875rem !important;
+  }
+  .mobile-text-base {
+    font-size: 1rem !important;
+  }
+  .mobile-p-2 {
+    padding: 0.5rem !important;
+  }
+  .mobile-gap-2 {
+    gap: 0.5rem !important;
+  }
+}
+
+/* Ensure buttons are tappable */
+button, [role="button"], a {
+  min-height: 44px;
+  min-width: 44px;
+}
+
 /* Disable Double Tap Zoom */
 * {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Canvas Styles */

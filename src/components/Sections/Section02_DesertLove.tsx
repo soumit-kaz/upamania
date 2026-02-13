@@ -495,7 +495,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen w-full relative overflow-hidden cursor-pointer select-none touch-manipulation"
+      className="h-screen h-[100dvh] w-full relative overflow-hidden cursor-pointer select-none touch-manipulation"
       onClick={handleInteraction}
       onTouchStart={(e) => e.preventDefault()}
       onTouchEnd={handleInteraction}
@@ -640,14 +640,14 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
 
       {/* =============== SUN / CELESTIAL BODY =============== */}
       <motion.div
-        className="absolute top-8 right-8 md:top-12 md:right-12"
+        className="absolute top-4 right-4 sm:top-8 sm:right-8 md:top-12 md:right-12"
         animate={{
           scale: progress > 70 ? 0.8 : 1,
           y: progress > 70 ? -20 : 0,
         }}
       >
         <motion.div
-          className="w-16 h-16 md:w-24 md:h-24 rounded-full relative"
+          className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full relative"
           animate={{
             background: progress > 70
               ? 'radial-gradient(circle, #F5F5DC 0%, #E6E6FA 50%, #DDA0DD 100%)'
@@ -668,7 +668,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
               {[...Array(12)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-1 h-8 md:h-12 bg-gradient-to-t from-yellow-400/60 to-transparent"
+                  className="absolute w-0.5 sm:w-1 h-6 sm:h-8 md:h-12 bg-gradient-to-t from-yellow-400/60 to-transparent"
                   style={{
                     left: '50%',
                     top: '-20%',
@@ -1236,14 +1236,14 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
 
       {/* =============== THE BOY =============== */}
       <motion.div
-        className="absolute bottom-[26%] flex flex-col items-center z-10"
+        className="absolute bottom-[22%] sm:bottom-[26%] flex flex-col items-center z-10"
         style={{ left: '15%' }}
         animate={{ scale: isComplete ? 1.1 : 1 }}
       >
         {/* Glow effect */}
         <motion.div
           className="absolute rounded-full -z-10"
-          style={{ width: 70, height: 100, top: -5, left: -10 }}
+          style={{ width: 50, height: 70, top: -3, left: -7 }}
           animate={{
             boxShadow: isComplete
               ? '0 0 40px rgba(100, 149, 237, 0.6), 0 0 80px rgba(65, 105, 225, 0.4)'
@@ -1261,7 +1261,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           <img
             src="https://i.ibb.co.com/BXqzP1K/boy.png"
             alt="Boy"
-            className="w-10 h-14 sm:w-12 sm:h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
+            className="w-8 h-11 sm:w-10 sm:h-14 md:w-12 md:h-16 lg:w-16 lg:h-20 object-cover rounded-lg drop-shadow-lg"
             style={{
               filter: 'drop-shadow(0 4px 8px rgba(65, 105, 225, 0.5))',
             }}
@@ -1272,7 +1272,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           {!isComplete && progress < 70 && (
             <motion.div
               key="lonely"
-              className="absolute -top-8 -right-4 text-lg"
+              className="absolute -top-6 sm:-top-8 -right-3 sm:-right-4 text-sm sm:text-lg"
               initial={{ scale: 0 }}
               animate={{ scale: [0.8, 1, 0.8], y: [0, -3, 0] }}
               exit={{ scale: 0, opacity: 0 }}
@@ -1284,7 +1284,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           {(progress >= 70 || isComplete) && (
             <motion.div
               key="love"
-              className="absolute -top-8 -right-4 text-lg"
+              className="absolute -top-6 sm:-top-8 -right-3 sm:-right-4 text-sm sm:text-lg"
               initial={{ scale: 0 }}
               animate={{ scale: [0.9, 1.1, 0.9] }}
               transition={{ duration: 1, repeat: Infinity }}
@@ -1297,14 +1297,14 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
 
       {/* =============== THE GIRL =============== */}
       <motion.div
-        className="absolute bottom-[26%] flex flex-col items-center z-10"
+        className="absolute bottom-[22%] sm:bottom-[26%] flex flex-col items-center z-10"
         animate={{ left: `${girlPosition}%` }}
         transition={{ type: 'spring', stiffness: 80, damping: 12 }}
       >
         {/* Aura glow */}
         <motion.div
           className="absolute rounded-full -z-10"
-          style={{ width: 80, height: 110, top: -10, left: -15 }}
+          style={{ width: 60, height: 80, top: -8, left: -12 }}
           animate={{
             boxShadow: [
               '0 0 30px rgba(255, 105, 180, 0.5)',
@@ -1324,18 +1324,18 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           <img
             src="https://i.ibb.co.com/BVTBVNPd/girl.png"
             alt="Girl"
-            className="w-10 h-14 sm:w-12 sm:h-16 md:w-16 md:h-20 object-cover rounded-lg drop-shadow-lg"
+            className="w-8 h-11 sm:w-10 sm:h-14 md:w-12 md:h-16 lg:w-16 lg:h-20 object-cover rounded-lg drop-shadow-lg"
             style={{
               filter: 'drop-shadow(0 4px 8px rgba(255, 105, 180, 0.5))',
             }}
           />
         </motion.div>
         {/* Floating hearts trail */}
-        <motion.div className="absolute -top-6 flex gap-1">
+        <motion.div className="absolute -top-4 sm:-top-6 flex gap-1">
           {['💕', '💖', '💗'].map((heart, i) => (
             <motion.span
               key={i}
-              className="text-sm md:text-base"
+              className="text-xs sm:text-sm md:text-base"
               animate={{
                 opacity: [0, 1, 0],
                 y: [-3, -20],
@@ -1357,7 +1357,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
       <AnimatePresence>
         {isComplete && (
           <motion.div
-            className="absolute bottom-[40%] z-20"
+            className="absolute bottom-[35%] sm:bottom-[40%] z-20"
             style={{ left: '16%' }}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -1365,8 +1365,8 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
             {['❤️', '💕', '💖', '💗', '💓', '💞', '💝'].map((heart, i) => (
               <motion.span
                 key={i}
-                className="absolute text-2xl md:text-5xl"
-                style={{ left: i * 15, top: Math.sin(i) * 20 }}
+                className="absolute text-lg sm:text-2xl md:text-5xl"
+                style={{ left: i * 10, top: Math.sin(i) * 15 }}
                 animate={{
                   y: [0, -25, 0],
                   scale: [1, 1.4, 1],
@@ -1435,7 +1435,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                   className="relative w-full h-full flex items-center justify-center"
                 >
                   {/* Image with cinematic styling */}
-                  <div className="relative w-[90%] md:w-[70%] max-w-2xl aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative w-[95%] sm:w-[90%] md:w-[70%] max-w-2xl aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
                     {/* Vignette effect */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 z-10" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30 z-10" />
@@ -1466,12 +1466,12 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                   </div>
 
                   {/* Text overlay */}
-                  <div className="absolute bottom-[15%] left-0 right-0 text-center z-30 px-6">
+                  <div className="absolute bottom-[10%] sm:bottom-[15%] left-0 right-0 text-center z-30 px-4 sm:px-6">
                     <motion.h3
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.5, duration: 0.8 }}
-                      className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3"
+                      className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3"
                       style={{
                         textShadow: '0 0 40px rgba(255, 105, 180, 0.8), 0 4px 20px rgba(0, 0, 0, 0.8)',
                       }}
@@ -1482,7 +1482,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.8, duration: 0.8 }}
-                      className="text-lg md:text-xl lg:text-2xl text-white/90 italic"
+                      className="text-sm sm:text-lg md:text-xl lg:text-2xl text-white/90 italic"
                       style={{
                         textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
                       }}
@@ -1511,7 +1511,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                   {['❤️', '💕', '💖', '💗', '💓'].map((heart, i) => (
                     <motion.div
                       key={`heart-${i}`}
-                      className="absolute text-2xl md:text-3xl z-20"
+                      className="absolute text-lg sm:text-2xl md:text-3xl z-20"
                       style={{ left: `${15 + i * 18}%`, bottom: '10%' }}
                       animate={{
                         y: [0, -100, -200],
@@ -1535,13 +1535,13 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
 
             {/* Names at bottom */}
             <motion.div
-              className="absolute bottom-8 left-0 right-0 text-center z-30"
+              className="absolute bottom-4 sm:bottom-8 left-0 right-0 text-center z-30"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
               <motion.p
-                className="text-xl md:text-2xl font-light tracking-widest"
+                className="text-base sm:text-xl md:text-2xl font-light tracking-widest"
                 style={{
                   background: 'linear-gradient(90deg, #FFB6C1, #FF69B4, #FFB6C1)',
                   backgroundSize: '200% 100%',
@@ -1618,7 +1618,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
               initial={{ scale: 0.7, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               transition={{ type: 'spring', delay: 0.3, stiffness: 100 }}
-              className="relative bg-gradient-to-br from-white/95 via-pink-50/95 to-purple-50/95 backdrop-blur-xl rounded-3xl p-8 md:p-12 mx-4 max-w-lg text-center shadow-2xl border border-white/50"
+              className="relative bg-gradient-to-br from-white/95 via-pink-50/95 to-purple-50/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 mx-4 max-w-lg text-center shadow-2xl border border-white/50"
             >
               {/* Decorative elements */}
               <div className="absolute -top-6 left-1/2 -translate-x-1/2">
@@ -1631,7 +1631,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
               </div>
 
               <motion.div
-                className="text-6xl md:text-8xl mb-6"
+                className="text-5xl sm:text-6xl md:text-8xl mb-4 sm:mb-6"
                 animate={{
                   scale: [1, 1.1, 1],
                   rotate: [0, 5, -5, 0],
@@ -1641,18 +1641,18 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
                 💑
               </motion.div>
               
-              <h3 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+              <h3 className="text-xl sm:text-2xl md:text-4xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3 sm:mb-4">
                 Love Transforms Everything
               </h3>
               
-              <p className="text-gray-600 mb-6 leading-relaxed text-sm md:text-base">
+              <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-xs sm:text-sm md:text-base">
                 In the desert of loneliness, your presence brought <span className="text-blue-500 font-medium">rain</span> to my parched heart,{' '}
                 <span className="text-pink-500 font-medium">flowers</span> to my barren soul, and{' '}
                 <span className="text-purple-500 font-medium">music</span> to my silent world.
               </p>
               
               <motion.p
-                className="text-lg md:text-xl font-medium italic mb-8"
+                className="text-base sm:text-lg md:text-xl font-medium italic mb-6 sm:mb-8"
                 style={{
                   background: 'linear-gradient(90deg, #FF69B4, #9B59B6, #FF69B4)',
                   backgroundSize: '200% 100%',

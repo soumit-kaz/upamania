@@ -147,7 +147,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-screen w-full relative overflow-hidden"
+      className="h-screen h-[100dvh] w-full relative overflow-hidden"
     >
       {/* Deep night sky gradient background */}
       <div 
@@ -269,18 +269,18 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
             initial={{ opacity: 0, y: 50, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.8 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50"
+            className="fixed bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm"
           >
-            <div className="bg-gradient-to-r from-pink-500/90 to-purple-500/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 shadow-2xl">
-              <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-r from-pink-500/90 to-purple-500/90 backdrop-blur-md px-4 sm:px-6 py-3 sm:py-4 rounded-2xl border border-white/20 shadow-2xl">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <motion.span 
-                  className="text-2xl"
+                  className="text-xl sm:text-2xl"
                   animate={{ rotate: [0, 15, -15, 0] }}
                   transition={{ duration: 0.5, repeat: 2 }}
                 >
                   😊
                 </motion.span>
-                <span className="text-white font-medium">{currentNoMessage}</span>
+                <span className="text-white font-medium text-sm sm:text-base">{currentNoMessage}</span>
               </div>
             </div>
           </motion.div>
@@ -288,7 +288,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
       </AnimatePresence>
 
       {/* Main content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-20 px-6">
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-20 px-4 sm:px-6">
         <AnimatePresence>
           {showProposal && !answered && (
             <motion.div
@@ -300,7 +300,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
             >
               {/* Decorative ring */}
               <motion.div
-                className="flex items-center justify-center gap-4 mb-6"
+                className="flex items-center justify-center gap-4 mb-4 sm:mb-6"
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: 0.3, type: 'spring', stiffness: 100 }}
@@ -313,7 +313,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  <span className="text-5xl md:text-7xl">💍</span>
+                  <span className="text-4xl sm:text-5xl md:text-7xl">💍</span>
                   <motion.div
                     className="absolute inset-0 rounded-full"
                     style={{
@@ -332,7 +332,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <motion.h1
-                  className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed mb-8"
+                  className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed mb-6 sm:mb-8"
                   style={{
                     background: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 30%, #FFD700 50%, #FF69B4 70%, #FFB6C1 100%)',
                     backgroundSize: '200% 100%',
@@ -345,13 +345,13 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                   transition={{ duration: 5, repeat: Infinity }}
                 >
                   Will you be mine<br />
-                  <span className="text-3xl md:text-5xl lg:text-6xl font-medium">Forever?</span>
+                  <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium">Forever?</span>
                 </motion.h1>
               </motion.div>
 
               {/* Yes / No Buttons */}
               <motion.div
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
@@ -360,7 +360,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                 <motion.button
                   onClick={handleYes}
                   onTouchEnd={(e) => { e.preventDefault(); handleYes(); }}
-                  className="group relative px-10 sm:px-12 md:px-16 py-4 md:py-5 rounded-full overflow-hidden touch-manipulation min-w-[160px] min-h-[52px]"
+                  className="group relative px-8 sm:px-10 md:px-12 lg:px-16 py-3 sm:py-4 md:py-5 rounded-full overflow-hidden touch-manipulation min-w-[140px] sm:min-w-[160px] min-h-[48px] sm:min-h-[52px]"
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -395,7 +395,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                     />
                   </motion.div>
 
-                  <span className="relative z-10 text-white font-semibold text-lg md:text-xl tracking-wide flex items-center gap-2">
+                  <span className="relative z-10 text-white font-semibold text-base sm:text-lg md:text-xl tracking-wide flex items-center gap-1 sm:gap-2">
                     <motion.span
                       animate={{ scale: [1, 1.3, 1] }}
                       transition={{ duration: 0.8, repeat: Infinity }}
@@ -416,7 +416,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                 <motion.button
                   onClick={handleNo}
                   onTouchEnd={(e) => { e.preventDefault(); handleNo(); }}
-                  className="relative px-8 sm:px-10 md:px-12 py-4 md:py-5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm overflow-hidden touch-manipulation min-w-[120px] min-h-[52px]"
+                  className="relative px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm overflow-hidden touch-manipulation min-w-[100px] sm:min-w-[120px] min-h-[48px] sm:min-h-[52px]"
                   animate={{ 
                     x: noButtonPosition.x, 
                     y: noButtonPosition.y,
@@ -428,7 +428,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                   }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  <span className="relative z-10 text-white/60 font-medium text-lg md:text-xl tracking-wide">
+                  <span className="relative z-10 text-white/60 font-medium text-base sm:text-lg md:text-xl tracking-wide">
                     {noClickCount === 0 && "No..."}
                     {noClickCount === 1 && "Really no?"}
                     {noClickCount === 2 && "Are you sure?"}
@@ -463,7 +463,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
             >
               {/* Ring celebration */}
               <motion.div
-                className="text-6xl md:text-8xl mb-8"
+                className="text-4xl sm:text-6xl md:text-8xl mb-4 sm:mb-6 md:mb-8"
                 animate={{
                   scale: [1, 1.2, 1],
                   y: [0, -20, 0],
@@ -474,7 +474,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
               </motion.div>
 
               <motion.h2
-                className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6"
+                className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6"
                 style={{
                   background: 'linear-gradient(135deg, #FFD700 0%, #FF69B4 25%, #FFD700 50%, #FF69B4 75%, #FFD700 100%)',
                   backgroundSize: '300% 100%',
@@ -490,7 +490,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
               </motion.h2>
 
               <motion.p
-                className="text-lg md:text-xl text-white/90 mb-4 leading-relaxed"
+                className="text-sm sm:text-lg md:text-xl text-white/90 mb-3 sm:mb-4 leading-relaxed px-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -502,7 +502,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
               </motion.p>
 
               <motion.p
-                className="text-xl md:text-2xl font-light italic my-8"
+                className="text-base sm:text-xl md:text-2xl font-light italic my-4 sm:my-6 md:my-8 px-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -518,14 +518,14 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
 
               {/* Names with heart */}
               <motion.div
-                className="flex items-center justify-center gap-4 text-2xl md:text-4xl"
+                className="flex items-center justify-center gap-2 sm:gap-4 text-xl sm:text-2xl md:text-4xl"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.2, type: 'spring' }}
               >
                 <span className="text-pink-400 font-light">Upama</span>
                 <motion.span
-                  className="text-3xl md:text-4xl"
+                  className="text-2xl sm:text-3xl md:text-4xl"
                   animate={{ scale: [1, 1.4, 1] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
                 >
@@ -536,7 +536,7 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
 
               {/* Date */}
               <motion.p
-                className="text-white/40 text-sm mt-10"
+                className="text-white/40 text-xs sm:text-sm mt-6 sm:mt-8 md:mt-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.8 }}

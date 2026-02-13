@@ -90,7 +90,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className="h-screen w-full relative overflow-hidden cursor-pointer touch-manipulation"
+      className="h-screen h-[100dvh] w-full relative overflow-hidden cursor-pointer touch-manipulation"
       style={{
         background: 'linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 30%, #2d1f3d 60%, #1a1a2e 100%)',
       }}
@@ -150,7 +150,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
             transition={{ duration: 2, repeat: Infinity }}
           >
             <motion.p
-              className="text-2xl md:text-4xl font-light tracking-[0.3em]"
+              className="text-lg sm:text-2xl md:text-4xl font-light tracking-[0.2em] sm:tracking-[0.3em] px-4"
               style={{
                 background: 'linear-gradient(135deg, #FFB6C1 0%, #FF69B4 50%, #FFB6C1 100%)',
                 backgroundSize: '200% 100%',
@@ -250,7 +250,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute top-[12%] md:top-[10%] right-[8%] md:right-[12%] z-30"
+            className="absolute top-[8%] sm:top-[10%] md:top-[10%] right-[5%] sm:right-[8%] md:right-[12%] z-30"
             initial={{ opacity: 0, scale: 0.5, y: -30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1, type: 'spring' }}
@@ -268,7 +268,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
             
             {/* Circular image */}
             <div 
-              className="relative w-36 h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden"
+              className="relative w-24 h-24 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden"
               style={{
                 boxShadow: '0 0 80px 25px rgba(255,200,100,0.5), 0 0 120px 40px rgba(255,150,50,0.3), 0 0 160px 60px rgba(147,51,234,0.15)',
               }}
@@ -425,7 +425,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       {/* Sanctuary/Temple at bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
         {/* Ground/hill silhouette */}
-        <svg viewBox="0 0 1440 200" className="w-full h-auto" preserveAspectRatio="none">
+        <svg viewBox="0 0 1440 200" className="w-full h-16 sm:h-auto" preserveAspectRatio="none">
           <defs>
             <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#1a1a2e" />
@@ -437,8 +437,8 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
         </svg>
         
         {/* Temple silhouette */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <svg width="200" height="120" viewBox="0 0 200 120" className="opacity-80">
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2">
+          <svg width="140" height="84" viewBox="0 0 200 120" className="sm:w-[200px] sm:h-[120px] opacity-80">
             {/* Main temple body */}
             <rect x="60" y="60" width="80" height="60" fill="#1a1a2e" />
             {/* Roof layers */}
@@ -468,9 +468,9 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
         </div>
 
         {/* Boy looking at moon */}
-        <div className="absolute bottom-12 right-[30%] md:right-[35%]">
+        <div className="absolute bottom-8 sm:bottom-12 right-[25%] sm:right-[30%] md:right-[35%]">
           {/* Boy silhouette */}
-          <svg width="30" height="50" viewBox="0 0 30 50" className="relative z-10">
+          <svg width="20" height="34" viewBox="0 0 30 50" className="relative z-10 sm:w-[30px] sm:h-[50px]">
             {/* Head */}
             <circle cx="15" cy="8" r="7" fill="#0a0a15" />
             {/* Body */}
@@ -485,26 +485,26 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
         </div>
         
         {/* Trees silhouettes */}
-        <div className="absolute bottom-4 left-10">
-          <svg width="60" height="80" viewBox="0 0 60 80">
+        <div className="absolute bottom-2 sm:bottom-4 left-4 sm:left-10">
+          <svg width="40" height="53" viewBox="0 0 60 80" className="sm:w-[60px] sm:h-[80px]">
             <ellipse cx="30" cy="30" rx="25" ry="30" fill="#0f0f1f" />
             <rect x="27" y="55" width="6" height="25" fill="#0a0a10" />
           </svg>
         </div>
-        <div className="absolute bottom-4 right-10">
-          <svg width="50" height="70" viewBox="0 0 50 70">
+        <div className="absolute bottom-2 sm:bottom-4 right-4 sm:right-10">
+          <svg width="33" height="47" viewBox="0 0 50 70" className="sm:w-[50px] sm:h-[70px]">
             <ellipse cx="25" cy="25" rx="20" ry="25" fill="#0f0f1f" />
             <rect x="22" y="45" width="6" height="25" fill="#0a0a10" />
           </svg>
         </div>
-        <div className="absolute bottom-6 left-1/4">
-          <svg width="40" height="60" viewBox="0 0 40 60">
+        <div className="absolute bottom-3 sm:bottom-6 left-1/4">
+          <svg width="27" height="40" viewBox="0 0 40 60" className="sm:w-[40px] sm:h-[60px]">
             <ellipse cx="20" cy="20" rx="15" ry="20" fill="#12121f" />
             <rect x="17" y="38" width="6" height="22" fill="#0a0a12" />
           </svg>
         </div>
-        <div className="absolute bottom-6 right-1/4">
-          <svg width="45" height="65" viewBox="0 0 45 65">
+        <div className="absolute bottom-3 sm:bottom-6 right-1/4">
+          <svg width="30" height="43" viewBox="0 0 45 65" className="sm:w-[45px] sm:h-[65px]">
             <ellipse cx="22" cy="22" rx="18" ry="22" fill="#12121f" />
             <rect x="19" y="42" width="6" height="23" fill="#0a0a12" />
           </svg>
@@ -571,15 +571,16 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute bottom-0 left-0 right-0 z-30"
+            className="absolute bottom-0 left-0 right-0 z-30 pb-safe"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
+            style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}
           >
             <motion.button
               onClick={onComplete}
               onTouchEnd={(e) => { e.preventDefault(); onComplete(); }}
-              className="group relative w-full py-3 sm:py-2 overflow-hidden touch-manipulation min-h-[52px]"
+              className="group relative w-full py-4 sm:py-3 overflow-hidden touch-manipulation min-h-[56px] sm:min-h-[52px]"
               whileHover={{ scale: 1.0 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -612,7 +613,7 @@ export default function Section00_Loading({ isActive, onComplete }: SectionProps
                 transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
               />
 
-              <span className="relative z-10 text-white/90 font-medium text-sm md:text-base tracking-wider flex items-center justify-center gap-2">
+              <span className="relative z-10 text-white/90 font-medium text-base sm:text-sm md:text-base tracking-wider flex items-center justify-center gap-2">
                 Begin Our Journey
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
