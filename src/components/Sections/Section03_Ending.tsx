@@ -23,6 +23,7 @@ const CUTE_REJECTIONS = [
 export default function Section03_Ending({ isActive, onComplete }: SectionProps) {
   const [showProposal, setShowProposal] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [showLyrics, setShowLyrics] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [noClickCount, setNoClickCount] = useState(0);
   const [showNoMessage, setShowNoMessage] = useState(false);
@@ -138,6 +139,11 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
         scalar: 1.5,
       });
     }, 1000);
+
+    // Show lyrics after 5 seconds
+    setTimeout(() => {
+      setShowLyrics(true);
+    }, 5000);
   };
 
   if (!isActive) return null;
@@ -538,11 +544,155 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
               <motion.p
                 className="text-white/40 text-xs sm:text-sm mt-6 sm:mt-8 md:mt-10"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: showLyrics ? 0 : 1 }}
                 transition={{ delay: 1.8 }}
               >
                 February 14, 2026 — The day our forever began ✨
               </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Love Lyrics Section */}
+        <AnimatePresence>
+          {showLyrics && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#0a0a1a]/95 via-[#1a0a2a]/95 to-[#0a0a1a]/95 backdrop-blur-sm"
+            >
+              <div className="text-center px-4 sm:px-8 max-w-2xl">
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="mb-6 sm:mb-8"
+                >
+                  <span className="text-3xl sm:text-4xl">💖</span>
+                </motion.div>
+                
+                <div className="space-y-2 sm:space-y-3 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed font-light">
+                  {[
+                    { highlight: 'উ', rest: 'ড়ে যাক যত বিষণ্ণ মেঘ,' },
+                    { highlight: 'প', rest: 'ড়ছে গায়ে জোছনা, দেখ।' },
+                    { highlight: 'মা', rest: 'ঝরাতে মান ভাঙা গান গেয়ে যাই' },
+                    { highlight: 'চৌ', rest: 'রাস্তার মোড়ে গল্পটা সাজাই।' },
+                  ].map((line, i) => (
+                    <motion.p
+                      key={`lyric1-${i}`}
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1 + i * 0.4 }}
+                      className="text-white/90"
+                    >
+                      <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-pink-400 via-rose-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,105,180,0.8)]">
+                        {line.highlight}
+                      </span>
+                      <span>{line.rest}</span>
+                    </motion.p>
+                  ))}
+                  
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.8 }}
+                    className="h-3 sm:h-4"
+                  />
+                  
+                  {[
+                    { highlight: 'ধূ', rest: 'সর চিন্তা তোমার পাড়ায়' },
+                    { highlight: 'রী', rest: 'তি ভেঙে এসে দাঁড়ায়।' },
+                    { highlight: 'ভা', rest: 'লোবেসে রাঙিয়ে দাও' },
+                    { highlight: 'লো', rest: 'ককথা ভুলে আমাকে নাও।' },
+                  ].map((line, i) => (
+                    <motion.p
+                      key={`lyric2-${i}`}
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 3 + i * 0.4 }}
+                      className="text-white/90"
+                    >
+                      <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]">
+                        {line.highlight}
+                      </span>
+                      <span>{line.rest}</span>
+                    </motion.p>
+                  ))}
+                  
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 4.8 }}
+                    className="h-3 sm:h-4"
+                  />
+                  
+                  {[
+                    { highlight: 'বাঁ', rest: 'ধবো ও ও ও...' },
+                    { highlight: 'সো', rest: 'নালী সুতোয়, তোমায়।' },
+                  ].map((line, i) => (
+                    <motion.p
+                      key={`lyric3-${i}`}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 5 + i * 0.5 }}
+                      className="text-white/90 font-medium"
+                    >
+                      <span className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-pink-400 via-rose-400 to-pink-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,105,180,0.8)]">
+                        {line.highlight}
+                      </span>
+                      <span>{line.rest}</span>
+                    </motion.p>
+                  ))}
+                </div>
+                
+                {/* Highlighted letters reveal at bottom */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: 6.5, duration: 1, type: 'spring' }}
+                  className="mt-8 sm:mt-12"
+                >
+                  <motion.p
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider"
+                    style={{
+                      background: 'linear-gradient(135deg, #FFD700 0%, #FF69B4 30%, #FFD700 50%, #FF69B4 70%, #FFD700 100%)',
+                      backgroundSize: '200% 100%',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      filter: 'drop-shadow(0 0 20px rgba(255,105,180,0.6))',
+                    }}
+                    animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    "উপমা চৌধুরী ভালোবাসো"
+                  </motion.p>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 7.5 }}
+                    className="text-white/50 text-xs sm:text-sm mt-4 block"
+                  >
+                    ✨ প্রতিটি লাইনের প্রথম অক্ষর মিলিয়ে পড়ে দেখো ✨
+                  </motion.span>
+                </motion.div>
+                
+                {/* Final heart */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 8, type: 'spring' }}
+                  className="mt-6 sm:mt-8"
+                >
+                  <motion.span
+                    className="text-4xl sm:text-5xl md:text-6xl inline-block"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    💕
+                  </motion.span>
+                </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
