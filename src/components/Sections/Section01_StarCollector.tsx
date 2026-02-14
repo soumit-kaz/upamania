@@ -56,7 +56,6 @@ const SOUMIT_EVADE_MESSAGES = [
   { text: "Oops! Where did I go? 👀", subtext: "The star vanished into thin air!" },
   { text: "Catch me if you can! 💫", subtext: "This star has moves!" },
   { text: "Almost got me! 🏃‍♂️", subtext: "One more try..." },
-  { text: "Okay okay, I'll stay still! 💖", subtext: "The star surrenders to love!" },
 ];
 
 export default function Section01_StarCollector({ isActive, onComplete }: SectionProps) {
@@ -579,15 +578,6 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                   <p className="text-sm sm:text-base text-white/80 text-center">
                     {soumitEvadeMessage.subtext}
                   </p>
-                  {soumitAttempts < 4 && (
-                    <motion.p 
-                      className="text-xs text-white/60 text-center mt-2"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      Attempts: {soumitAttempts}/4 💪
-                    </motion.p>
-                  )}
                 </motion.div>
               </motion.div>
             )}
