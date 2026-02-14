@@ -73,6 +73,31 @@ const FLOWER_TYPES = ['🌸', '🌺', '🌷', '🌻', '🌼', '💐', '🌹', '�
 const MUSIC_NOTES = ['♪', '♫', '♬', '🎵', '🎶', '🎼'];
 const BUTTERFLY_COLORS = ['#FFB6C1', '#FF69B4', '#DDA0DD', '#E6E6FA', '#87CEEB', '#98FB98'];
 
+// Cute dialogue between the girl and boy
+const UPAMA_QUESTIONS = [
+  "Soumit... if I was a cockroach, would you still love me? 🪳",
+  "What if I turned into a potato? 🥔",
+  "Would you love me if I was a smelly sock? 🧦",
+  "If I was invisible, would you search for me? 👻",
+  "What if I could only speak in meows? 🐱",
+  "Would you love me if I was 100 years old? 👵",
+  "If I was a mosquito, would you let me bite you? 🦟",
+  "What if I had green hair forever? 💚",
+  "Would you love me if I snored super loud? 😴",
+  "If I was a cactus, would you still hug me? 🌵",
+];
+
+const SOUMIT_RESPONSES = [
+  "Yes baby, I'd still love you! 💖",
+  "Always and forever! 💕",
+  "Of course, my love! 🥰",
+  "You know I would! 😘",
+  "Even then, I love you! 💗",
+  "Yes yes yes! A million times yes! 💝",
+  "My heart is yours no matter what! 💞",
+  "I'd love you in any form! 🌟",
+];
+
 // Image sequence showing Upama coming closer to Soumit
 const TRANSITION_IMAGES = [
   {
@@ -106,6 +131,13 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
   const [showCompletion, setShowCompletion] = useState(false);
   const [clickRipples, setClickRipples] = useState<{id: number, x: number, y: number}[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Dialogue states
+  const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
+  const [currentResponse, setCurrentResponse] = useState<string | null>(null);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [showQuestion, setShowQuestion] = useState(false);
+  const [showResponse, setShowResponse] = useState(false);
 
   // Image transition sequence after game completion
   useEffect(() => {
@@ -124,6 +156,41 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
       return () => clearTimeout(timer);
     }
   }, [showImageTransition, currentImageIndex]);
+
+  // Cute dialogue cycling between Upama and Soumit
+  useEffect(() => {
+    if (!isActive || isComplete || showImageTransition || showCompletion) return;
+    
+    // Start dialogue after a brief moment
+    const startDelay = setTimeout(() => {
+      const dialogueCycle = () => {
+        // Show girl's question
+        setCurrentQuestion(UPAMA_QUESTIONS[questionIndex % UPAMA_QUESTIONS.length]);
+        setShowQuestion(true);
+        setShowResponse(false);
+        
+        // After 3 seconds, show boy's response
+        setTimeout(() => {
+          setCurrentResponse(SOUMIT_RESPONSES[Math.floor(Math.random() * SOUMIT_RESPONSES.length)]);
+          setShowResponse(true);
+        }, 2500);
+        
+        // Hide after showing both, then next question
+        setTimeout(() => {
+          setShowQuestion(false);
+          setShowResponse(false);
+          setQuestionIndex(prev => prev + 1);
+        }, 5500);
+      };
+      
+      dialogueCycle();
+      const intervalId = setInterval(dialogueCycle, 7000);
+      
+      return () => clearInterval(intervalId);
+    }, 2000);
+    
+    return () => clearTimeout(startDelay);
+  }, [isActive, isComplete, showImageTransition, showCompletion, questionIndex]);
 
   // =============== MEMOIZED PARTICLE GENERATORS ===============
   const stars = useMemo(() => 
@@ -1269,7 +1336,7 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
         </motion.div>
         {/* Emotion bubble */}
         <AnimatePresence mode="wait">
-          {!isComplete && progress < 70 && (
+          {!isComplete && progress < 70 && !showResponse && (
             <motion.div
               key="lonely"
               className="absolute -top-6 sm:-top-8 -right-3 sm:-right-4 text-sm sm:text-lg"
@@ -1290,6 +1357,27 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
               transition={{ duration: 1, repeat: Infinity }}
             >
               ❤️
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* Soumit's response speech bubble */}
+        <AnimatePresence>
+          {showResponse && currentResponse && !isComplete && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0, y: -10 }}
+              transition={{ type: 'spring', damping: 12 }}
+              className="absolute -top-16 sm:-top-20 left-1/2 -translate-x-1/4 z-30 w-28 sm:w-36 md:w-44"
+            >
+              <div className="bg-gradient-to-br from-blue-500/95 to-indigo-600/95 px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-white/30 relative">
+                <p className="text-[10px] sm:text-xs md:text-sm text-white text-center leading-tight">
+                  {currentResponse}
+                </p>
+                {/* Speech bubble tail */}
+                <div className="absolute -bottom-2 left-1/4 w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent border-t-blue-500/95" />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1351,6 +1439,31 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
             </motion.span>
           ))}
         </motion.div>
+        
+        {/* Upama's question speech bubble */}
+        <AnimatePresence>
+          {showQuestion && currentQuestion && !isComplete && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0, y: -10 }}
+              transition={{ type: 'spring', damping: 12 }}
+              className="absolute -top-20 sm:-top-24 md:-top-28 right-0 translate-x-1/4 z-30 w-36 sm:w-44 md:w-52"
+            >
+              <motion.div 
+                className="bg-gradient-to-br from-pink-500/95 to-rose-600/95 px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-white/30 relative"
+                animate={{ rotate: [-1, 1, -1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <p className="text-[10px] sm:text-xs md:text-sm text-white text-center leading-tight font-medium">
+                  {currentQuestion}
+                </p>
+                {/* Speech bubble tail */}
+                <div className="absolute -bottom-2 right-1/4 w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent border-t-pink-500/95" />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
       {/* =============== HEARTS BETWEEN THEM (when close) =============== */}

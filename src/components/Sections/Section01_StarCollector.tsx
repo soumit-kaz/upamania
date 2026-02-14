@@ -50,6 +50,15 @@ const STAR_DATA = [
   },
 ];
 
+// Playful messages when Soumit's star evades
+const SOUMIT_EVADE_MESSAGES = [
+  { text: "Hehe, not so fast! 😜", subtext: "Soumit's star is playing hard to get!" },
+  { text: "Oops! Where did I go? 👀", subtext: "The star vanished into thin air!" },
+  { text: "Catch me if you can! 💫", subtext: "This star has moves!" },
+  { text: "Almost got me! 🏃‍♂️", subtext: "One more try..." },
+  { text: "Okay okay, I'll stay still! 💖", subtext: "The star surrenders to love!" },
+];
+
 export default function Section01_StarCollector({ isActive, onComplete }: SectionProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState<'intro' | 'collecting' | 'complete'>('intro');
@@ -62,6 +71,12 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
   const [risingStarReveal, setRisingStarReveal] = useState(false);
   const backgroundStarsRef = useRef<{x: number; y: number; size: number; alpha: number; twinkleSpeed: number}[]>([]);
   const animationRef = useRef<number>();
+  
+  // Playful evasion states for Soumit's star
+  const [soumitAttempts, setSoumitAttempts] = useState(0);
+  const [soumitEvadeMessage, setSoumitEvadeMessage] = useState<{text: string; subtext: string} | null>(null);
+  const [soumitVanished, setSoumitVanished] = useState(false);
+  const [isSoumitCatchable, setIsSoumitCatchable] = useState(false);
 
   // Initialize stars with names
   const initializeStars = useCallback(() => {
@@ -210,6 +225,49 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
   const handleStarClick = (star: NamedStar) => {
     if (star.collected) return;
     
+    // SPECIAL HANDLING FOR SOUMIT'S STAR - PLAYFUL EVASION!
+    if (star.isSpecial && !isSoumitCatchable) {
+      const newAttempts = soumitAttempts + 1;
+      setSoumitAttempts(newAttempts);
+      
+      // Show playful message
+      const messageIndex = Math.min(newAttempts - 1, SOUMIT_EVADE_MESSAGES.length - 1);
+      setSoumitEvadeMessage(SOUMIT_EVADE_MESSAGES[messageIndex]);
+      
+      // Different behaviors based on attempt count
+      if (newAttempts === 1) {
+        // First attempt: Star moves aside
+        const newX = star.x > window.innerWidth / 2 
+          ? star.x - 80 - Math.random() * 60 
+          : star.x + 80 + Math.random() * 60;
+        const newY = Math.max(100, Math.min(window.innerHeight - 150, star.y + (Math.random() - 0.5) * 100));
+        setStars(prev => prev.map(s => s.id === star.id ? { ...s, x: Math.max(60, Math.min(window.innerWidth - 60, newX)), y: newY } : s));
+      } else if (newAttempts === 2) {
+        // Second attempt: Star vanishes and reappears
+        setSoumitVanished(true);
+        setTimeout(() => {
+          const newX = 100 + Math.random() * (window.innerWidth - 200);
+          const newY = 120 + Math.random() * (window.innerHeight - 300);
+          setStars(prev => prev.map(s => s.id === star.id ? { ...s, x: newX, y: newY } : s));
+          setSoumitVanished(false);
+        }, 800);
+      } else if (newAttempts === 3) {
+        // Third attempt: Star dodges dramatically
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 100 + Math.random() * 80;
+        const newX = Math.max(60, Math.min(window.innerWidth - 60, star.x + Math.cos(angle) * distance));
+        const newY = Math.max(100, Math.min(window.innerHeight - 150, star.y + Math.sin(angle) * distance));
+        setStars(prev => prev.map(s => s.id === star.id ? { ...s, x: newX, y: newY } : s));
+      } else if (newAttempts >= 4) {
+        // Fourth attempt: Star "surrenders" - becomes catchable
+        setIsSoumitCatchable(true);
+      }
+      
+      // Hide message after delay
+      setTimeout(() => setSoumitEvadeMessage(null), 2500);
+      return;
+    }
+    
     // First, reveal the star name if not already revealed
     if (!star.revealed) {
       setStars((prev) =>
@@ -319,7 +377,14 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
               key={star.id}
               initial={{ scale: 0, opacity: 0 }}
               animate={
-                star.collected
+                // Special handling for Soumit's star vanish effect
+                star.isSpecial && soumitVanished
+                  ? {
+                      scale: [1, 1.5, 0],
+                      opacity: [1, 0.5, 0],
+                      rotate: [0, 180, 360],
+                    }
+                  : star.collected
                   ? star.isSpecial 
                     ? { 
                         // Soumit's star RISES UP gloriously!
@@ -337,14 +402,24 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                         rotate: [0, 180, 360, 540, 720],
                         scale: [1, 0.8, 0.6, 0.4, 0.2],
                       }
-                  : { 
-                      scale: 1,
-                      opacity: 1,
-                      y: [0, -8, 0],
-                    }
+                  : star.isSpecial && soumitAttempts > 0 && !isSoumitCatchable
+                    ? {
+                        // Playful wiggle when being chased
+                        scale: [1, 1.1, 1],
+                        opacity: 1,
+                        y: [0, -5, 5, 0],
+                        x: [0, 3, -3, 0],
+                      }
+                    : { 
+                        scale: 1,
+                        opacity: 1,
+                        y: [0, -8, 0],
+                      }
               }
               transition={
-                star.collected
+                star.isSpecial && soumitVanished
+                  ? { duration: 0.5, ease: 'easeInOut' }
+                  : star.collected
                   ? star.isSpecial
                     ? { 
                         duration: 2,
@@ -472,6 +547,48 @@ export default function Section01_StarCollector({ isActive, onComplete }: Sectio
                     &ldquo;{currentHint.hint}&rdquo;
                   </p>
                 </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Playful evade message when Soumit's star runs away */}
+          <AnimatePresence>
+            {soumitEvadeMessage && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, y: -30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 30 }}
+                transition={{ type: 'spring', damping: 12, stiffness: 200 }}
+                className="fixed top-20 sm:top-28 left-1/2 -translate-x-1/2 z-50 w-[85%] max-w-sm"
+              >
+                <motion.div 
+                  className="bg-gradient-to-br from-pink-500/95 via-rose-500/95 to-amber-500/95 p-4 sm:p-5 rounded-2xl shadow-2xl border-2 border-white/30"
+                  animate={{ rotate: [-2, 2, -2] }}
+                  transition={{ duration: 0.3, repeat: 3 }}
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1], rotate: [0, -15, 15, 0] }}
+                    transition={{ duration: 0.6 }}
+                    className="text-3xl sm:text-4xl text-center mb-2"
+                  >
+                    🌟
+                  </motion.div>
+                  <p className="text-lg sm:text-xl text-white font-bold text-center mb-1">
+                    {soumitEvadeMessage.text}
+                  </p>
+                  <p className="text-sm sm:text-base text-white/80 text-center">
+                    {soumitEvadeMessage.subtext}
+                  </p>
+                  {soumitAttempts < 4 && (
+                    <motion.p 
+                      className="text-xs text-white/60 text-center mt-2"
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    >
+                      Attempts: {soumitAttempts}/4 💪
+                    </motion.p>
+                  )}
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
