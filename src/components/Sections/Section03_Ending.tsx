@@ -560,9 +560,9 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
-              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#0a0a1a]/95 via-[#1a0a2a]/95 to-[#0a0a1a]/95 backdrop-blur-sm"
+              className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[#0a0a1a]/95 via-[#1a0a2a]/95 to-[#0a0a1a]/95 backdrop-blur-sm overflow-y-auto py-8"
             >
-              <div className="text-center px-4 sm:px-8 max-w-2xl">
+              <div className="text-center px-4 sm:px-8 max-w-2xl my-auto">
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -646,42 +646,11 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
                   ))}
                 </div>
                 
-                {/* Highlighted letters reveal at bottom */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: 6.5, duration: 1, type: 'spring' }}
-                  className="mt-8 sm:mt-12"
-                >
-                  <motion.p
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider"
-                    style={{
-                      background: 'linear-gradient(135deg, #FFD700 0%, #FF69B4 30%, #FFD700 50%, #FF69B4 70%, #FFD700 100%)',
-                      backgroundSize: '200% 100%',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      filter: 'drop-shadow(0 0 20px rgba(255,105,180,0.6))',
-                    }}
-                    animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    "উপমা চৌধুরী ভালোবাসো"
-                  </motion.p>
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 7.5 }}
-                    className="text-white/50 text-xs sm:text-sm mt-4 block"
-                  >
-                    ✨ প্রতিটি লাইনের প্রথম অক্ষর মিলিয়ে পড়ে দেখো ✨
-                  </motion.span>
-                </motion.div>
-                
                 {/* Final heart */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 8, type: 'spring' }}
+                  transition={{ delay: 6, type: 'spring' }}
                   className="mt-6 sm:mt-8"
                 >
                   <motion.span
