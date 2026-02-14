@@ -1,9 +1,44 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SectionProps } from '@/types';
+import { useStore } from '@/store/useStore';
 import confetti from 'canvas-confetti';
+
+// YouTube IFrame API types
+declare global {
+  interface Window {
+    YT: {
+      Player: new (
+        elementId: string,
+        options: {
+          videoId: string;
+          playerVars?: Record<string, number | string>;
+          events?: {
+            onReady?: (event: { target: YTPlayer }) => void;
+            onStateChange?: (event: { data: number }) => void;
+          };
+        }
+      ) => YTPlayer;
+      PlayerState: {
+        PLAYING: number;
+        PAUSED: number;
+        ENDED: number;
+      };
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+interface YTPlayer {
+  playVideo: () => void;
+  pauseVideo: () => void;
+  setVolume: (volume: number) => void;
+  mute: () => void;
+  unMute: () => void;
+  destroy: () => void;
+}
 
 const ENDING_IMAGE = 'https://i.ibb.co.com/8nvvQxxR/09185327-e7c8-473b-bc9c-9be26f021876.jpg';
 
@@ -30,6 +65,11 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
   const [currentNoMessage, setCurrentNoMessage] = useState('');
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // YouTube player state
+  const playerRef = useRef<YTPlayer | null>(null);
+  const [playerReady, setPlayerReady] = useState(false);
+  const { audioVolume, isMuted, setAudioPlaying } = useStore();
 
   // Generate particles
   const stars = useMemo(() =>
@@ -61,6 +101,85 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
       duration: 10 + Math.random() * 5,
     })), []
   );
+
+  // Load YouTube IFrame API
+  useEffect(() => {
+    if (!isActive) return;
+    
+    // Check if API is already loaded
+    if (window.YT && window.YT.Player) {
+      initializePlayer();
+      return;
+    }
+
+    // Load the IFrame Player API code asynchronously
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+    // Setup callback
+    window.onYouTubeIframeAPIReady = () => {
+      initializePlayer();
+    };
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy();
+        playerRef.current = null;
+      }
+    };
+  }, [isActive]);
+
+  const initializePlayer = () => {
+    if (playerRef.current) return;
+    
+    playerRef.current = new window.YT.Player('yt-player-hidden', {
+      videoId: 'QB0OKFdbbFI',
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0,
+        playsinline: 1,
+      },
+      events: {
+        onReady: (event) => {
+          setPlayerReady(true);
+          event.target.setVolume(isMuted ? 0 : audioVolume * 100);
+        },
+        onStateChange: (event) => {
+          if (event.data === window.YT.PlayerState.PLAYING) {
+            setAudioPlaying(true);
+          } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+            setAudioPlaying(false);
+          }
+        },
+      },
+    });
+  };
+
+  // Sync volume with store
+  useEffect(() => {
+    if (playerRef.current && playerReady) {
+      if (isMuted) {
+        playerRef.current.mute();
+      } else {
+        playerRef.current.unMute();
+        playerRef.current.setVolume(audioVolume * 100);
+      }
+    }
+  }, [audioVolume, isMuted, playerReady]);
+
+  // Play video when lyrics are shown
+  useEffect(() => {
+    if (showLyrics && playerRef.current && playerReady) {
+      playerRef.current.playVideo();
+    }
+  }, [showLyrics, playerReady]);
 
   useEffect(() => {
     if (!isActive) return;
@@ -674,6 +793,22 @@ export default function Section03_Ending({ isActive, onComplete }: SectionProps)
           background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
         }}
       />
+      
+      {/* Hidden YouTube Player */}
+      <div 
+        style={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          overflow: 'hidden',
+          opacity: 0,
+          pointerEvents: 'none',
+          top: '-9999px',
+          left: '-9999px',
+        }}
+      >
+        <div id="yt-player-hidden" />
+      </div>
     </motion.section>
   );
 }
