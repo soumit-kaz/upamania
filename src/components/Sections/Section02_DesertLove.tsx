@@ -135,7 +135,6 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
   // Dialogue states
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentResponse, setCurrentResponse] = useState<string | null>(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
 
@@ -161,36 +160,52 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
   useEffect(() => {
     if (!isActive || isComplete || showImageTransition || showCompletion) return;
     
-    // Start dialogue after a brief moment
-    const startDelay = setTimeout(() => {
-      const dialogueCycle = () => {
-        // Show girl's question
-        setCurrentQuestion(UPAMA_QUESTIONS[questionIndex % UPAMA_QUESTIONS.length]);
-        setShowQuestion(true);
+    let questionIdx = 0;
+    let intervalId: NodeJS.Timeout;
+    let timeouts: NodeJS.Timeout[] = [];
+    
+    const dialogueCycle = () => {
+      // Don't show dialogue when characters are close
+      if (progress > 50) {
+        setShowQuestion(false);
         setShowResponse(false);
-        
-        // After 3 seconds, show boy's response
-        setTimeout(() => {
-          setCurrentResponse(SOUMIT_RESPONSES[Math.floor(Math.random() * SOUMIT_RESPONSES.length)]);
-          setShowResponse(true);
-        }, 2500);
-        
-        // Hide after showing both, then next question
-        setTimeout(() => {
-          setShowQuestion(false);
-          setShowResponse(false);
-          setQuestionIndex(prev => prev + 1);
-        }, 5500);
-      };
+        return;
+      }
       
+      // Show girl's question
+      setCurrentQuestion(UPAMA_QUESTIONS[questionIdx % UPAMA_QUESTIONS.length]);
+      setShowQuestion(true);
+      setShowResponse(false);
+      setCurrentResponse(null);
+      
+      // After 2s, hide question and show boy's response
+      const t1 = setTimeout(() => {
+        setShowQuestion(false);
+        setCurrentResponse(SOUMIT_RESPONSES[Math.floor(Math.random() * SOUMIT_RESPONSES.length)]);
+        setShowResponse(true);
+      }, 2000);
+      timeouts.push(t1);
+      
+      // After 4s, hide response
+      const t2 = setTimeout(() => {
+        setShowResponse(false);
+        questionIdx++;
+      }, 4000);
+      timeouts.push(t2);
+    };
+    
+    // Start after brief delay
+    const startDelay = setTimeout(() => {
       dialogueCycle();
-      const intervalId = setInterval(dialogueCycle, 7000);
-      
-      return () => clearInterval(intervalId);
+      intervalId = setInterval(dialogueCycle, 5500);
     }, 2000);
     
-    return () => clearTimeout(startDelay);
-  }, [isActive, isComplete, showImageTransition, showCompletion, questionIndex]);
+    return () => {
+      clearTimeout(startDelay);
+      clearInterval(intervalId);
+      timeouts.forEach(t => clearTimeout(t));
+    };
+  }, [isActive, isComplete, showImageTransition, showCompletion, progress]);
 
   // =============== MEMOIZED PARTICLE GENERATORS ===============
   const stars = useMemo(() => 
@@ -1361,22 +1376,21 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           )}
         </AnimatePresence>
         
-        {/* Soumit's response speech bubble */}
+        {/* Soumit's response speech bubble - fixed position at top left */}
         <AnimatePresence>
-          {showResponse && currentResponse && !isComplete && (
+          {showResponse && currentResponse && !isComplete && progress <= 50 && (
             <motion.div
-              initial={{ opacity: 0, scale: 0, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0, y: -10 }}
+              initial={{ opacity: 0, scale: 0, x: -20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0, x: -20 }}
               transition={{ type: 'spring', damping: 12 }}
-              className="absolute -top-16 sm:-top-20 left-1/2 -translate-x-1/4 z-30 w-28 sm:w-36 md:w-44"
+              className="fixed top-16 sm:top-20 left-3 sm:left-6 z-40 w-32 sm:w-40 md:w-48"
             >
-              <div className="bg-gradient-to-br from-blue-500/95 to-indigo-600/95 px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-white/30 relative">
-                <p className="text-[10px] sm:text-xs md:text-sm text-white text-center leading-tight">
+              <div className="bg-gradient-to-br from-blue-500/95 to-indigo-600/95 px-3 py-2 sm:px-4 sm:py-3 rounded-xl shadow-lg border border-white/30 relative">
+                <p className="text-[10px] sm:text-xs font-semibold text-blue-200 mb-1">Soumit 👦</p>
+                <p className="text-xs sm:text-sm text-white text-center leading-tight">
                   {currentResponse}
                 </p>
-                {/* Speech bubble tail */}
-                <div className="absolute -bottom-2 left-1/4 w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent border-t-blue-500/95" />
               </div>
             </motion.div>
           )}
@@ -1440,26 +1454,25 @@ export default function Section02_DesertLove({ isActive, onComplete }: SectionPr
           ))}
         </motion.div>
         
-        {/* Upama's question speech bubble */}
+        {/* Upama's question speech bubble - fixed position at top right */}
         <AnimatePresence>
-          {showQuestion && currentQuestion && !isComplete && (
+          {showQuestion && currentQuestion && !isComplete && progress <= 50 && (
             <motion.div
-              initial={{ opacity: 0, scale: 0, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0, y: -10 }}
+              initial={{ opacity: 0, scale: 0, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0, x: 20 }}
               transition={{ type: 'spring', damping: 12 }}
-              className="absolute -top-20 sm:-top-24 md:-top-28 right-0 translate-x-1/4 z-30 w-36 sm:w-44 md:w-52"
+              className="fixed top-16 sm:top-20 right-3 sm:right-6 z-40 w-36 sm:w-44 md:w-52"
             >
               <motion.div 
-                className="bg-gradient-to-br from-pink-500/95 to-rose-600/95 px-2 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-white/30 relative"
+                className="bg-gradient-to-br from-pink-500/95 to-rose-600/95 px-3 py-2 sm:px-4 sm:py-3 rounded-xl shadow-lg border border-white/30 relative"
                 animate={{ rotate: [-1, 1, -1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <p className="text-[10px] sm:text-xs md:text-sm text-white text-center leading-tight font-medium">
+                <p className="text-[10px] sm:text-xs font-semibold text-pink-200 mb-1">Upama 👧</p>
+                <p className="text-xs sm:text-sm text-white text-center leading-tight font-medium">
                   {currentQuestion}
                 </p>
-                {/* Speech bubble tail */}
-                <div className="absolute -bottom-2 right-1/4 w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent border-t-pink-500/95" />
               </motion.div>
             </motion.div>
           )}
